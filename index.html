@@ -3,236 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi Fishy 🌻 | Dispensador de Besos</title>
+    <title>Resuelve el Sudoku para un Mensaje Especial ❤️</title>
     <style>
         /* --- ESTILOS BASE --- */
         body {
             margin: 0; padding: 0;
-            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
-            height: 100vh; width: 100vw; overflow: hidden;
+            background: linear-gradient(to top, #e6f7ff, #ffe0f5); /* Fondo suave */
+            height: 100vh; width: 100vw; 
+            overflow: auto; /* Permitir scroll si la carta es muy larga en móvil */
             font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-            position: relative;
+            display: flex; flex-direction: column; justify-content: flex-start; /* Alineación arriba */
+            align-items: center;
+            color: #d63031;
+            padding-top: 5vh; /* Espacio superior para centrar mejor en la vista inicial */
+            box-sizing: border-box;
         }
 
-        /* Título y Contador */
         h1 {
-            position: absolute; top: 10px; width: 100%; text-align: center;
-            color: #d63031; text-shadow: 2px 2px 0px #fff; font-size: 1.8rem;
-            z-index: 1000; pointer-events: none;
-        }
-        #counter-box {
-            position: absolute; top: 60px; right: 20px;
-            background: rgba(255, 255, 255, 0.9); padding: 8px 15px;
-            border-radius: 15px; border: 2px solid #ff6b6b; color: #d63031;
-            font-weight: bold; font-size: 1.1rem; z-index: 1000;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px #fff;
+            text-align: center;
+            padding: 0 10px;
         }
 
-        /* --- LA ABEJITA (Z-index 5, más rápida) --- */
-        #bee {
-            position: absolute; font-size: 50px; cursor: pointer;
-            z-index: 5; /* Se esconde detrás de las flores (z-index 10) */
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-            animation: flyChaos 20s infinite linear; /* **Ajuste de velocidad: 20s** */
-            transition: transform 0.1s;
+        /* --- SUDOKU CONTAINER --- */
+        #sudoku-container {
+            display: grid;
+            grid-template-columns: repeat(4, 60px); 
+            grid-template-rows: repeat(4, 60px);   
+            gap: 2px;
+            border: 4px solid #ff6b6b;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+            margin-bottom: 20px;
+            background-color: #fff;
+            touch-action: manipulation; /* Mejora la interacción táctil en móviles */
         }
-        #bee:active { transform: scale(0.8); }
 
-        @keyframes flyChaos {
-            0% { left: -5%; top: 10%; transform: scaleX(1); }
-            15% { left: 25%; top: 75%; transform: scaleX(1) rotate(15deg); }
-            35% { left: 60%; top: 15%; transform: scaleX(1) rotate(-10deg); }
-            50% { left: 105%; top: 40%; transform: scaleX(-1); }
-            65% { left: 70%; top: 85%; transform: scaleX(-1) rotate(10deg); }
-            85% { left: 30%; top: 20%; transform: scaleX(-1) rotate(-15deg); }
-            100% { left: -5%; top: 60%; transform: scaleX(-1); }
+        .sudoku-cell {
+            width: 60px; height: 60px;
+            background-color: #fff;
+            border: 1px solid #ffb8b8;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 2rem; font-weight: bold;
+            color: #333;
         }
-        
-        /* --- DISEÑO DE GIRASOL (Z-index 10) --- */
-        .sunflower-container {
-            position: absolute; z-index: 10; display: flex;
-            flex-direction: column; align-items: center;
-            pointer-events: none; transform-origin: bottom center;
-            animation: sway 4s infinite ease-in-out alternate;
-        }
-        .flower-head {
-            position: relative; width: 80px; height: 80px; background: #5c4033; 
-            border-radius: 50%; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5); z-index: 2;
-        }
-        .flower-head::after {
-            content: "::::"; color: #3e2723; font-size: 20px; letter-spacing: 2px;
-            position: absolute; top: 25%; left: 25%; font-weight: bold;
-        }
-        .petals {
-            position: absolute; top: -20px; left: -20px; width: 120px; height: 120px;
-            z-index: 1;
-        }
-        .petal {
-            position: absolute; width: 30px; height: 60px; background: #ffdd00;
-            border-radius: 50% 50% 10px 10px; top: 30px; left: 45px; transform-origin: center bottom;
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-        .stem { width: 10px; height: 100vh; background: #4caf50; margin-top: -10px; z-index: 0; position: relative; }
-        .leaf { width: 40px; height: 20px; background: #4caf50; position: absolute; border-radius: 0 50% 50% 0; }
-        .leaf.left { left: -40px; top: 50px; border-radius: 50% 0 0 50%; transform: rotate(-10deg); }
-        .leaf.right { right: -40px; top: 100px; transform: rotate(10deg); }
 
-        /* --- POPUPS y Carta Final --- */
+        .sudoku-cell input {
+            width: 90%; height: 90%;
+            border: none; outline: none;
+            text-align: center;
+            font-size: 2rem; font-weight: bold;
+            color: #4a4a4a;
+            background: none;
+        }
+
+        .sudoku-cell.fixed {
+            background-color: #ffe0e0; 
+            color: #d63031;
+            cursor: default;
+        }
+
+        /* Colores de validación */
+        .sudoku-cell.correct input { color: #28a745 !important; } /* !important para asegurar que gane */
+        .sudoku-cell.incorrect input { color: #dc3545 !important; }
+
+        /* --- BOTÓN DE VERIFICACIÓN --- */
+        #verify-button {
+            background: #ff6b6b; color: white; border: none;
+            padding: 12px 25px; border-radius: 25px; font-size: 1.2rem;
+            cursor: pointer; margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: background 0.3s, transform 0.1s;
+        }
+        #verify-button:hover { background: #ff4757; transform: translateY(-2px); }
+        #verify-button:active { transform: translateY(0); }
+        #verify-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* --- POPUP y CARTA FINAL --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center;
-            visibility: hidden; opacity: 0; transition: all 0.3s; z-index: 2000;
+            background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center;
+            visibility: hidden; opacity: 0; transition: all 0.5s; z-index: 2000;
         }
         .overlay.show { visibility: visible; opacity: 1; }
 
-        .popup-card {
-            background: white; padding: 30px; border-radius: 15px; text-align: center;
-            border: 4px solid #ff6b6b; box-shadow: 0 0 25px rgba(255, 255, 255, 0.5); max-width: 85%;
+        .letter-content {
+            background: #fffdf0; padding: 40px; border-radius: 15px; border: 3px solid #d4af37;
+            text-align: center; max-width: 600px; width: 90%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            animation: fadeInScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Importante para móvil: permitir scroll dentro de la carta si es muy larga */
+            max-height: 90vh; 
+            overflow-y: auto;
         }
 
-        .letter-content {
-            background: #fffdf0; padding: 40px; border-radius: 5px; border: 2px solid #d4af37;
-            text-align: center; position: relative; max-width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        @keyframes fadeInScale {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         
-        /* Estilo de la carta: Nueva fuente cursiva y negrita para tu mensaje */
+        .letter-content h2 {
+            color: #d4af37; margin-top:0; font-size: 2rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .letter-content h2::before, .letter-content h2::after {
+            content: '💖'; margin: 0 10px; font-size: 1.5rem;
+        }
+
         .letter-text {
-            font-family: 'Georgia', serif; font-size: 1.3rem; color: #333; 
-            font-style: italic; line-height: 1.6; margin: 20px 0;
+            font-family: 'Georgia', serif; font-size: 1.1rem; color: #333; 
+            line-height: 1.6; margin: 20px 0;
+            white-space: pre-wrap;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .letter-signature {
+            color: #ff6b6b; font-weight:bold; font-size: 1.2rem; margin-top: 20px;
+            text-align: right;
+            padding-right: 10px;
         }
 
         button {
-            background: #ff6b6b; color: white; border: none; padding: 10px 20px;
-            border-radius: 20px; font-size: 1rem; cursor: pointer; margin-top: 10px;
+            background: #ff6b6b; color: white; border: none; padding: 12px 25px;
+            border-radius: 25px; font-size: 1.1rem; cursor: pointer; margin-top: 20px;
+            transition: background 0.3s;
         }
+        button:hover { background: #ff4757; }
 
         /* --- MEDIA QUERY: AJUSTES PARA MÓVIL (Max 600px) --- */
         @media (max-width: 600px) {
-            h1 { font-size: 1.5rem; top: 5px; }
-            #counter-box { top: 5px; right: 5px; padding: 5px 10px; font-size: 0.9rem; }
-            #bee { font-size: 40px; }
-            .letter-content { padding: 25px; max-width: 95%; margin: 20px; }
-            .letter-text { font-size: 1rem; }
-            .popup-card h2 { font-size: 2.5rem !important; }
+            body { padding-top: 2vh; } /* Menos padding superior en móvil */
+            h1 { font-size: 1.5rem; margin-bottom: 20px; }
+            
+            #sudoku-container {
+                /* Reducir el tamaño de la cuadrícula para móviles */
+                grid-template-columns: repeat(4, 45px);
+                grid-template-rows: repeat(4, 45px);
+            }
+            
+            .sudoku-cell, .sudoku-cell input {
+                width: 45px; height: 45px; 
+                font-size: 1.4rem; /* Reducir la fuente del número */
+            }
+            
+            #verify-button { padding: 10px 20px; font-size: 1rem; }
+            
+            /* Ajustes de la carta en móvil */
+            .letter-content { padding: 25px 15px; width: 95%; }
+            .letter-content h2 { font-size: 1.5rem; }
+            .letter-content h2::before, .letter-content h2::after { font-size: 1.2rem; margin: 0 5px; }
+            .letter-text { font-size: 0.95rem; }
+            .letter-signature { font-size: 1rem; }
+            button { padding: 10px 20px; font-size: 1rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <h1>Dispensador de besos para mi Fishy</h1>
-    <div id="counter-box">Besitos: <span id="count-display">0</span> / 30</div>
+    <h1>Resuelve el Sudoku para un Mensaje Especial 💕</h1>
+
+    <div id="sudoku-container">
+        </div>
+
+    <button id="verify-button">Verificar Sudoku</button>
 
     <audio id="secret-audio" src="secret_song.mp3" preload="auto" loop></audio>
 
-    <div id="field"></div>
-
-    <div id="bee" onclick="catchBee()">🐝</div>
-
-    <div id="muacki-overlay" class="overlay" onclick="closePopup('muacki-overlay')">
-        <div class="popup-card">
-            <h2 style="font-size: 3rem; margin:0; color:#ff4757;">Muacki! 💋</h2>
-            <p>¡Se esconde rápido! ¡Sigue buscando!</p>
-        </div>
-    </div>
-
     <div id="letter-overlay" class="overlay">
         <div class="letter-content">
-            <h2 style="color: #d4af37; margin-top:0;">¡Lo lograste! 💌</h2>
+            <h2>Segunda Carta de Aniversario</h2>
             <p class="letter-text">
-                **Mi Evelyn,**
+                Mi Evelyn, preciosa.
                 <br>
-                Cada uno de estos besitos es una prueba de cuánto te amo. 
-                Quiero que sepas que eres lo más importante en mi vida. 
-                Eres mi sol y mi persona favorita.
-                <br>
-                **Nunca lo olvides.**
+                Recuerdo esa noche en que volviste, platicamos un rato y nos levantamos temprano.
+                Tenía miedo, estábamos a la expectativa pero juntos, y eso para mí es muy valioso.
+                Te amo tanto porque sé que mi futuro está confiado en ti, porque sé que mi amor
+                descansa en buenas manos y que todo lo que hagamos y avancemos nos perfecciona.
+                💕
+                <br><br>
+                Esta página la hice para cada vez que no pueda estar sepas que esto lo hice con mucho amor,
+                así que una parte de mí está aquí.
             </p>
-            <p style="color: #ff6b6b; font-weight:bold;">❤️ Tu Fishy.</p>
-            <button onclick="closePopup('letter-overlay')">Guardar en mi corazón</button>
+            <p class="letter-signature">Te amo siempre, mi preciosa :3</p>
+            <button onclick="closePopup()">Guardar en mi corazón</button>
         </div>
     </div>
 
     <script>
-        // --- CONFIGURACIÓN ---
-        let besos = 0;
-        const metaBesos = 30;
-        const bee = document.getElementById('bee');
-        const countDisplay = document.getElementById('count-display');
-        const audio = document.getElementById('secret-audio');
+        const sudokuContainer = document.getElementById('sudoku-container');
+        const verifyButton = document.getElementById('verify-button');
+        const letterOverlay = document.getElementById('letter-overlay');
+        const secretAudio = document.getElementById('secret-audio');
 
-        // --- GENERADOR DE GIRASOLES ---
-        function createSunflowers() {
-            const field = document.getElementById('field');
-            const numberOfFlowers = 25;
+        // Solución del Sudoku 4x4
+        const solution = [
+            [1, 2, 3, 4],
+            [3, 4, 1, 2],
+            [2, 1, 4, 3],
+            [4, 3, 2, 1]
+        ];
 
-            for (let i = 0; i < numberOfFlowers; i++) {
-                const flower = document.createElement('div');
-                flower.classList.add('sunflower-container');
+        // Tablero inicial (0 para celdas vacías a llenar)
+        const initialBoard = [
+            [1, 0, 0, 4],
+            [0, 4, 1, 0],
+            [2, 0, 4, 0],
+            [0, 3, 0, 1]
+        ];
 
-                flower.innerHTML = `
-                    <div class="petals">
-                        <div class="petal"></div><div class="petal"></div>
-                        <div class="petal"></div><div class="petal"></div>
-                        <div class="petal"></div><div class="petal"></div>
-                        <div class="petal"></div><div class="petal"></div>
-                    </div>
-                    <div class="flower-head"></div>
-                    <div class="stem">
-                        <div class="leaf left"></div>
-                        <div class="leaf right"></div>
-                    </div>
-                `;
+        let currentBoard = JSON.parse(JSON.stringify(initialBoard));
 
-                // Aleatoriedad
-                const randomLeft = Math.random() * 95;
-                const maxScale = (window.innerWidth <= 600) ? 0.6 : 0.8;
-                const randomScale = 0.5 + Math.random() * maxScale;
-                
-                // **Ajuste para que estén más abajo (Mejor escondite):**
-                const randomBottom = -150 + Math.random() * 100; 
-                
-                const randomDelay = Math.random() * 5;
-                
-                // Aplicar estilos
-                flower.style.left = randomLeft + '%';
-                flower.style.bottom = randomBottom + 'px';
-                flower.style.transform = `scale(${randomScale})`;
-                flower.style.animationDelay = `-${randomDelay}s`;
-                
-                field.appendChild(flower);
+        // --- FUNCIONES DEL SUDOKU ---
+
+        function generateSudoku() {
+            sudokuContainer.innerHTML = '';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('sudoku-cell');
+
+                    if (initialBoard[r][c] !== 0) {
+                        cell.classList.add('fixed');
+                        cell.textContent = initialBoard[r][c];
+                    } else {
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.min = '1';
+                        input.max = '4';
+                        input.maxLength = '1';
+                        input.dataset.row = r;
+                        input.dataset.col = c;
+                        input.addEventListener('input', handleInput);
+                        cell.appendChild(input);
+                    }
+                    sudokuContainer.appendChild(cell);
+                }
             }
         }
 
-        // --- LÓGICA DEL JUEGO ---
-        function catchBee() {
-            besos++;
-            countDisplay.innerText = besos;
-            bee.style.animationPlayState = 'paused';
+        function handleInput(event) {
+            const input = event.target;
+            const row = parseInt(input.dataset.row);
+            const col = parseInt(input.dataset.col);
+            let value = parseInt(input.value);
 
-            if (besos >= metaBesos) {
-                // **Reproducir audio justo antes de mostrar la carta**
-                audio.play().catch(e => {
-                    console.warn("Audio bloqueado, se reintentará al hacer clic en 'Guardar en mi corazón'.");
-                });
-                document.getElementById('letter-overlay').classList.add('show');
+            // Asegurarse de que solo haya un dígito entre 1 y 4
+            if (isNaN(value) || value < 1 || value > 4 || input.value.length > 1) {
+                // Si el valor es inválido o tiene más de 1 dígito
+                input.value = input.value.slice(0, 1).replace(/[^1-4]/g, ''); // Deja el primer dígito si es 1-4
+                if (input.value === '') {
+                     currentBoard[row][col] = 0;
+                } else {
+                     currentBoard[row][col] = parseInt(input.value);
+                }
             } else {
-                document.getElementById('muacki-overlay').classList.add('show');
+                currentBoard[row][col] = value;
+            }
+
+            // Limpiar clases de validación para que no estorbe hasta que le den a verificar
+            input.parentElement.classList.remove('correct', 'incorrect');
+        }
+
+        function checkSudoku() {
+            let allCorrect = true;
+            const cells = sudokuContainer.querySelectorAll('.sudoku-cell');
+            let cellIndex = 0;
+
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = cells[cellIndex];
+                    let userValue;
+                    
+                    if (initialBoard[r][c] !== 0) {
+                        userValue = initialBoard[r][c];
+                    } else {
+                        userValue = currentBoard[r][c];
+                    }
+
+                    // Si la celda no es fija (tiene un input) se revisa la clase de validación
+                    if (initialBoard[r][c] === 0) {
+                        if (userValue === solution[r][c]) {
+                            cell.classList.remove('incorrect');
+                            cell.classList.add('correct');
+                        } else {
+                            cell.classList.remove('correct');
+                            cell.classList.add('incorrect');
+                            allCorrect = false;
+                        }
+                    } else if (userValue !== solution[r][c]) {
+                         // Esto es solo una doble verificación por si acaso un valor fijo está mal
+                        allCorrect = false; 
+                    }
+
+                    cellIndex++;
+                }
+            }
+
+            if (allCorrect) {
+                // Deshabilitar inputs
+                sudokuContainer.querySelectorAll('input').forEach(input => {
+                    input.disabled = true;
+                    input.style.color = '#28a745';
+                });
+                verifyButton.disabled = true;
+                showLetter();
+            } else {
+                alert("¡Sigue intentándolo, casi lo tienes!");
             }
         }
 
-        function closePopup(id) {
-            document.getElementById(id).classList.remove('show');
-            bee.style.animationPlayState = 'running';
-            
-            // Si la abeja ya fue atrapada 30 veces y cierra el POPUP de la carta, el audio seguirá sonando (si ya se activó).
+        // --- LÓGICA DE LA CARTA Y AUDIO ---
+
+        function showLetter() {
+            letterOverlay.classList.add('show');
+            // 1. Intentar reproducir audio automáticamente (puede ser bloqueado por el navegador)
+            secretAudio.play().catch(e => {
+                console.warn("Reproducción automática de audio bloqueada.", e);
+            });
         }
 
-        // Iniciar el campo de flores al cargar
-        createSunflowers();
+        function closePopup() {
+            letterOverlay.classList.remove('show');
+            // 2. Si el audio fue bloqueado en el paso 1, al hacer click, se garantiza la reproducción
+            secretAudio.play().catch(e => {
+                console.warn("Audio aún bloqueado, asegúrate de que el navegador permita la reproducción.", e);
+            });
+        }
 
+        // --- INICIALIZACIÓN ---
+        generateSudoku();
+        verifyButton.addEventListener('click', checkSudoku);
+
+        // Configuración inicial del audio
+        secretAudio.volume = 0.5;
+        secretAudio.loop = true;
     </script>
 
 </body>
 </html>
-
