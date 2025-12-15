@@ -5,55 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para mi Fishy 🌻 | Dispensador de Besos</title>
     <style>
-        /* --- ESTILOS BASE (Para todas las pantallas) --- */
+        /* --- ESTILOS BASE --- */
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            height: 100vh; width: 100vw; overflow: hidden;
             font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
             position: relative;
         }
 
-        /* Título */
+        /* Título y Contador */
         h1 {
-            position: absolute;
-            top: 10px;
-            width: 100%;
-            text-align: center;
-            color: #d63031;
-            text-shadow: 2px 2px 0px #fff;
-            font-size: 1.8rem;
-            z-index: 1000;
-            pointer-events: none;
+            position: absolute; top: 10px; width: 100%; text-align: center;
+            color: #d63031; text-shadow: 2px 2px 0px #fff; font-size: 1.8rem;
+            z-index: 1000; pointer-events: none;
         }
-
-        /* Contador */
         #counter-box {
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 8px 15px;
-            border-radius: 15px;
-            border: 2px solid #ff6b6b;
-            color: #d63031;
-            font-weight: bold;
-            font-size: 1.1rem;
-            z-index: 1000;
+            position: absolute; top: 60px; right: 20px;
+            background: rgba(255, 255, 255, 0.9); padding: 8px 15px;
+            border-radius: 15px; border: 2px solid #ff6b6b; color: #d63031;
+            font-weight: bold; font-size: 1.1rem; z-index: 1000;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- LA ABEJITA (Z-index y Animación base) --- */
+        /* --- LA ABEJITA (Z-index 5, más rápida) --- */
         #bee {
-            position: absolute;
-            font-size: 50px;
-            cursor: pointer;
-            z-index: 5;
+            position: absolute; font-size: 50px; cursor: pointer;
+            z-index: 5; /* Se esconde detrás de las flores (z-index 10) */
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-            animation: flyChaos 30s infinite linear;
+            animation: flyChaos 20s infinite linear; /* **Ajuste de velocidad: 20s** */
             transition: transform 0.1s;
         }
         #bee:active { transform: scale(0.8); }
@@ -68,108 +48,36 @@
             100% { left: -5%; top: 60%; transform: scaleX(-1); }
         }
         
-        /* --- DISEÑO DE GIRASOL (Genérico) --- */
+        /* --- DISEÑO DE GIRASOL (Z-index 10) --- */
         .sunflower-container {
-            position: absolute;
-            z-index: 10; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: none;
-            transform-origin: bottom center;
+            position: absolute; z-index: 10; display: flex;
+            flex-direction: column; align-items: center;
+            pointer-events: none; transform-origin: bottom center;
             animation: sway 4s infinite ease-in-out alternate;
         }
         .flower-head {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            background: #5c4033; 
-            border-radius: 50%;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
-            z-index: 2;
+            position: relative; width: 80px; height: 80px; background: #5c4033; 
+            border-radius: 50%; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5); z-index: 2;
         }
         .flower-head::after {
-            content: "::::";
-            color: #3e2723;
-            font-size: 20px;
-            letter-spacing: 2px;
-            position: absolute;
-            top: 25%; left: 25%; font-weight: bold;
+            content: "::::"; color: #3e2723; font-size: 20px; letter-spacing: 2px;
+            position: absolute; top: 25%; left: 25%; font-weight: bold;
         }
         .petals {
-            position: absolute; top: -20px; left: -20px;
-            width: 120px; height: 120px;
+            position: absolute; top: -20px; left: -20px; width: 120px; height: 120px;
             z-index: 1;
         }
         .petal {
-            position: absolute; width: 30px; height: 60px;
-            background: #ffdd00;
-            border-radius: 50% 50% 10px 10px;
-            top: 30px; left: 45px; transform-origin: center bottom;
+            position: absolute; width: 30px; height: 60px; background: #ffdd00;
+            border-radius: 50% 50% 10px 10px; top: 30px; left: 45px; transform-origin: center bottom;
             box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-        .petal:nth-child(1) { transform: rotate(0deg) translateY(-40px); }
-        .petal:nth-child(2) { transform: rotate(45deg) translateY(-40px); }
-        .petal:nth-child(3) { transform: rotate(90deg) translateY(-40px); }
-        .petal:nth-child(4) { transform: rotate(135deg) translateY(-40px); }
-        .petal:nth-child(5) { transform: rotate(180deg) translateY(-40px); }
-        .petal:nth-child(6) { transform: rotate(225deg) translateY(-40px); }
-        .petal:nth-child(7) { transform: rotate(270deg) translateY(-40px); }
-        .petal:nth-child(8) { transform: rotate(315deg) translateY(-40px); }
         .stem { width: 10px; height: 100vh; background: #4caf50; margin-top: -10px; z-index: 0; position: relative; }
         .leaf { width: 40px; height: 20px; background: #4caf50; position: absolute; border-radius: 0 50% 50% 0; }
         .leaf.left { left: -40px; top: 50px; border-radius: 50% 0 0 50%; transform: rotate(-10deg); }
         .leaf.right { right: -40px; top: 100px; transform: rotate(10deg); }
 
-        @keyframes sway {
-            from { transform: rotate(2deg); }
-            to { transform: rotate(-2deg); }
-        }
-
-        /* --- MEDIA QUERY: AJUSTES PARA CELULARES PEQUEÑOS (Ancho máximo de 600px) --- */
-        @media (max-width: 600px) {
-            
-            /* Título más pequeño */
-            h1 {
-                font-size: 1.5rem;
-                top: 5px;
-            }
-
-            /* Contador más pequeño y movido a la izquierda */
-            #counter-box {
-                top: 5px;
-                right: 5px;
-                padding: 5px 10px;
-                font-size: 0.9rem;
-            }
-
-            /* Abeja más pequeña */
-            #bee {
-                font-size: 40px; 
-            }
-
-            /* Reducir el tamaño de los girasoles al generarlos */
-            .sunflower-container {
-                /* La reducción de escala se hará en el JavaScript, pero se asegura que la cabeza no sea demasiado grande */
-            }
-
-            /* Ajuste del Popup de la Carta para que quepa bien en la pantalla vertical */
-            .letter-content {
-                padding: 25px;
-                max-width: 95%; /* Ocupa más ancho */
-                margin: 20px; /* Separación de los bordes */
-            }
-
-            .letter-text {
-                font-size: 1rem; /* Letra más pequeña para que la carta se vea mejor */
-            }
-
-            .popup-card h2 {
-                 font-size: 2.5rem !important; /* Muacki más pequeño */
-            }
-        }
-        
-        /* --- POPUPS (sin cambios) --- */
+        /* --- POPUPS y Carta Final --- */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center;
@@ -187,13 +95,25 @@
             text-align: center; position: relative; max-width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
+        /* Estilo de la carta: Nueva fuente cursiva y negrita para tu mensaje */
         .letter-text {
-            font-family: 'Georgia', serif; font-size: 1.3rem; color: #333; font-style: italic; line-height: 1.6; margin: 20px 0;
+            font-family: 'Georgia', serif; font-size: 1.3rem; color: #333; 
+            font-style: italic; line-height: 1.6; margin: 20px 0;
         }
 
         button {
             background: #ff6b6b; color: white; border: none; padding: 10px 20px;
             border-radius: 20px; font-size: 1rem; cursor: pointer; margin-top: 10px;
+        }
+
+        /* --- MEDIA QUERY: AJUSTES PARA MÓVIL (Max 600px) --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; top: 5px; }
+            #counter-box { top: 5px; right: 5px; padding: 5px 10px; font-size: 0.9rem; }
+            #bee { font-size: 40px; }
+            .letter-content { padding: 25px; max-width: 95%; margin: 20px; }
+            .letter-text { font-size: 1rem; }
+            .popup-card h2 { font-size: 2.5rem !important; }
         }
 
     </style>
@@ -218,14 +138,18 @@
 
     <div id="letter-overlay" class="overlay">
         <div class="letter-content">
-            <h2 style="color: #d4af37; margin-top:0;">💌 ¡Besitos Desbloqueados!</h2>
+            <h2 style="color: #d4af37; margin-top:0;">¡Lo lograste! 💌</h2>
             <p class="letter-text">
-                "Mi Evelyn, te amo tanto,<br>
-                esta página es para que cuando no pueda estar<br>
-                sientas mi compañía a través de besitos."
+                **Mi Evelyn,**
+                <br>
+                Cada uno de estos besitos es una prueba de cuánto te amo. 
+                Quiero que sepas que eres lo más importante en mi vida. 
+                Eres mi sol y mi persona favorita.
+                <br>
+                **Nunca lo olvides.**
             </p>
-            <p style="color: #ff6b6b; font-weight:bold;">❤️ Te amo.</p>
-            <button onclick="closePopup('letter-overlay')">Cerrar y escuchar</button>
+            <p style="color: #ff6b6b; font-weight:bold;">❤️ Tu Fishy.</p>
+            <button onclick="closePopup('letter-overlay')">Guardar en mi corazón</button>
         </div>
     </div>
 
@@ -246,7 +170,6 @@
                 const flower = document.createElement('div');
                 flower.classList.add('sunflower-container');
 
-                // HTML interno del girasol
                 flower.innerHTML = `
                     <div class="petals">
                         <div class="petal"></div><div class="petal"></div>
@@ -263,10 +186,12 @@
 
                 // Aleatoriedad
                 const randomLeft = Math.random() * 95;
-                // Ajustar la escala máxima si es un dispositivo móvil
                 const maxScale = (window.innerWidth <= 600) ? 0.6 : 0.8;
                 const randomScale = 0.5 + Math.random() * maxScale;
-                const randomBottom = -80 + Math.random() * 150;
+                
+                // **Ajuste para que estén más abajo (Mejor escondite):**
+                const randomBottom = -150 + Math.random() * 100; 
+                
                 const randomDelay = Math.random() * 5;
                 
                 // Aplicar estilos
@@ -286,6 +211,10 @@
             bee.style.animationPlayState = 'paused';
 
             if (besos >= metaBesos) {
+                // **Reproducir audio justo antes de mostrar la carta**
+                audio.play().catch(e => {
+                    console.warn("Audio bloqueado, se reintentará al hacer clic en 'Guardar en mi corazón'.");
+                });
                 document.getElementById('letter-overlay').classList.add('show');
             } else {
                 document.getElementById('muacki-overlay').classList.add('show');
@@ -296,12 +225,7 @@
             document.getElementById(id).classList.remove('show');
             bee.style.animationPlayState = 'running';
             
-            // Si cierra el POPUP de la carta, iniciar el audio
-            if (id === 'letter-overlay') {
-                audio.play().catch(e => {
-                    console.error("No se pudo iniciar el audio:", e);
-                });
-            }
+            // Si la abeja ya fue atrapada 30 veces y cierra el POPUP de la carta, el audio seguirá sonando (si ya se activó).
         }
 
         // Iniciar el campo de flores al cargar
@@ -311,3 +235,4 @@
 
 </body>
 </html>
+
