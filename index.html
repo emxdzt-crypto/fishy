@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para mi Fishy 🌻 | Dispensador de Besos</title>
     <style>
-        /* --- ESTILOS GENERALES --- */
+        /* --- ESTILOS BASE (Para todas las pantallas) --- */
         body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #87CEEB, #E0F7FA); /* Cielo azulado */
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
             height: 100vh;
             width: 100vw;
             overflow: hidden;
@@ -46,33 +46,31 @@
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* --- LA ABEJITA (Más lenta) --- */
+        /* --- LA ABEJITA (Z-index y Animación base) --- */
         #bee {
             position: absolute;
             font-size: 50px;
             cursor: pointer;
-            z-index: 5; /* Se esconde detrás de las flores (z-index 10) */
+            z-index: 5;
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-            animation: flyChaos 30s infinite linear; /* **Ajuste de velocidad** */
+            animation: flyChaos 30s infinite linear;
             transition: transform 0.1s;
         }
         #bee:active { transform: scale(0.8); }
 
-        /* Animación caótica más suave y lenta */
         @keyframes flyChaos {
             0% { left: -5%; top: 10%; transform: scaleX(1); }
             15% { left: 25%; top: 75%; transform: scaleX(1) rotate(15deg); }
             35% { left: 60%; top: 15%; transform: scaleX(1) rotate(-10deg); }
-            50% { left: 105%; top: 40%; transform: scaleX(-1); } /* Gira */
+            50% { left: 105%; top: 40%; transform: scaleX(-1); }
             65% { left: 70%; top: 85%; transform: scaleX(-1) rotate(10deg); }
             85% { left: 30%; top: 20%; transform: scaleX(-1) rotate(-15deg); }
             100% { left: -5%; top: 60%; transform: scaleX(-1); }
         }
         
-        /* --- DISEÑO DE GIRASOL (Ajuste de posicionamiento) --- */
+        /* --- DISEÑO DE GIRASOL (Genérico) --- */
         .sunflower-container {
             position: absolute;
-            /* bottom: -50px; <-- Eliminado para usar 'top' y 'height' */
             z-index: 10; 
             display: flex;
             flex-direction: column;
@@ -81,7 +79,6 @@
             transform-origin: bottom center;
             animation: sway 4s infinite ease-in-out alternate;
         }
-
         .flower-head {
             position: relative;
             width: 80px;
@@ -91,40 +88,26 @@
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
             z-index: 2;
         }
-
         .flower-head::after {
             content: "::::";
             color: #3e2723;
             font-size: 20px;
             letter-spacing: 2px;
             position: absolute;
-            top: 25%;
-            left: 25%;
-            font-weight: bold;
+            top: 25%; left: 25%; font-weight: bold;
         }
-
         .petals {
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 120px;
-            height: 120px;
+            position: absolute; top: -20px; left: -20px;
+            width: 120px; height: 120px;
             z-index: 1;
-            animation: rotateHead 20s infinite linear;
         }
-
         .petal {
-            position: absolute;
-            width: 30px;
-            height: 60px;
+            position: absolute; width: 30px; height: 60px;
             background: #ffdd00;
             border-radius: 50% 50% 10px 10px;
-            top: 30px;
-            left: 45px;
-            transform-origin: center bottom;
+            top: 30px; left: 45px; transform-origin: center bottom;
             box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
-
         .petal:nth-child(1) { transform: rotate(0deg) translateY(-40px); }
         .petal:nth-child(2) { transform: rotate(45deg) translateY(-40px); }
         .petal:nth-child(3) { transform: rotate(90deg) translateY(-40px); }
@@ -133,23 +116,8 @@
         .petal:nth-child(6) { transform: rotate(225deg) translateY(-40px); }
         .petal:nth-child(7) { transform: rotate(270deg) translateY(-40px); }
         .petal:nth-child(8) { transform: rotate(315deg) translateY(-40px); }
-
-        .stem {
-            width: 10px;
-            height: 100vh; /* Se extiende verticalmente */
-            background: #4caf50;
-            margin-top: -10px;
-            z-index: 0;
-            position: relative;
-        }
-
-        .leaf {
-            width: 40px;
-            height: 20px;
-            background: #4caf50;
-            position: absolute;
-            border-radius: 0 50% 50% 0;
-        }
+        .stem { width: 10px; height: 100vh; background: #4caf50; margin-top: -10px; z-index: 0; position: relative; }
+        .leaf { width: 40px; height: 20px; background: #4caf50; position: absolute; border-radius: 0 50% 50% 0; }
         .leaf.left { left: -40px; top: 50px; border-radius: 50% 0 0 50%; transform: rotate(-10deg); }
         .leaf.right { right: -40px; top: 100px; transform: rotate(10deg); }
 
@@ -158,64 +126,74 @@
             to { transform: rotate(-2deg); }
         }
 
-        /* --- POPUPS --- */
+        /* --- MEDIA QUERY: AJUSTES PARA CELULARES PEQUEÑOS (Ancho máximo de 600px) --- */
+        @media (max-width: 600px) {
+            
+            /* Título más pequeño */
+            h1 {
+                font-size: 1.5rem;
+                top: 5px;
+            }
+
+            /* Contador más pequeño y movido a la izquierda */
+            #counter-box {
+                top: 5px;
+                right: 5px;
+                padding: 5px 10px;
+                font-size: 0.9rem;
+            }
+
+            /* Abeja más pequeña */
+            #bee {
+                font-size: 40px; 
+            }
+
+            /* Reducir el tamaño de los girasoles al generarlos */
+            .sunflower-container {
+                /* La reducción de escala se hará en el JavaScript, pero se asegura que la cabeza no sea demasiado grande */
+            }
+
+            /* Ajuste del Popup de la Carta para que quepa bien en la pantalla vertical */
+            .letter-content {
+                padding: 25px;
+                max-width: 95%; /* Ocupa más ancho */
+                margin: 20px; /* Separación de los bordes */
+            }
+
+            .letter-text {
+                font-size: 1rem; /* Letra más pequeña para que la carta se vea mejor */
+            }
+
+            .popup-card h2 {
+                 font-size: 2.5rem !important; /* Muacki más pequeño */
+            }
+        }
+        
+        /* --- POPUPS (sin cambios) --- */
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 2000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center;
+            visibility: hidden; opacity: 0; transition: all 0.3s; z-index: 2000;
         }
         .overlay.show { visibility: visible; opacity: 1; }
 
         .popup-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 4px solid #ff6b6b;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-            max-width: 85%;
+            background: white; padding: 30px; border-radius: 15px; text-align: center;
+            border: 4px solid #ff6b6b; box-shadow: 0 0 25px rgba(255, 255, 255, 0.5); max-width: 85%;
         }
 
-        /* Carta Final */
         .letter-content {
-            background: #fffdf0;
-            padding: 40px;
-            border-radius: 5px;
-            border: 2px solid #d4af37;
-            text-align: center;
-            position: relative;
-            max-width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #fffdf0; padding: 40px; border-radius: 5px; border: 2px solid #d4af37;
+            text-align: center; position: relative; max-width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
         .letter-text {
-            font-family: 'Georgia', serif;
-            font-size: 1.3rem;
-            color: #333;
-            font-style: italic;
-            line-height: 1.6;
-            margin: 20px 0;
+            font-family: 'Georgia', serif; font-size: 1.3rem; color: #333; font-style: italic; line-height: 1.6; margin: 20px 0;
         }
 
         button {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 10px;
+            background: #ff6b6b; color: white; border: none; padding: 10px 20px;
+            border-radius: 20px; font-size: 1rem; cursor: pointer; margin-top: 10px;
         }
 
     </style>
@@ -284,9 +262,11 @@
                 `;
 
                 // Aleatoriedad
-                const randomLeft = Math.random() * 95; /* Evitar que se salgan demasiado por la derecha */
-                const randomScale = 0.5 + Math.random() * 0.8;
-                const randomBottom = -80 + Math.random() * 150; /* Algunos más en el horizonte */
+                const randomLeft = Math.random() * 95;
+                // Ajustar la escala máxima si es un dispositivo móvil
+                const maxScale = (window.innerWidth <= 600) ? 0.6 : 0.8;
+                const randomScale = 0.5 + Math.random() * maxScale;
+                const randomBottom = -80 + Math.random() * 150;
                 const randomDelay = Math.random() * 5;
                 
                 // Aplicar estilos
@@ -307,8 +287,6 @@
 
             if (besos >= metaBesos) {
                 document.getElementById('letter-overlay').classList.add('show');
-                // Intentar reproducir audio (la reproducción automática puede ser bloqueada, por eso se hace al click)
-                // audio.play().catch(e => console.error("Error al intentar reproducir audio automáticamente:", e));
             } else {
                 document.getElementById('muacki-overlay').classList.add('show');
             }
@@ -322,7 +300,6 @@
             if (id === 'letter-overlay') {
                 audio.play().catch(e => {
                     console.error("No se pudo iniciar el audio:", e);
-                    // Opcional: mostrar un mensaje que diga "Activa el audio para la sorpresa"
                 });
             }
         }
